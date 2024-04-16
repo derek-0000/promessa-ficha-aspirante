@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { Icon } from "@iconify/react";
 
 import {
@@ -11,7 +10,6 @@ import {
   TextField,
   Typography,
   IconButton,
-  Paper,
 } from "@mui/material";
 
 import PrintComponent from "./components/PrintComponent";
@@ -135,8 +133,7 @@ function App() {
             </form>
             {documents.length ? (
               <Box sx={{ p: 2, border: "1px solid #D1D1D1", borderRadius: 1 }}>
-                {documents.map((document, index) => {
-                  return (
+                {documents.map((document, index) => (
                     <Box width="100%" key={document + index}>
                       <Stack
                         direction="row"
@@ -157,8 +154,7 @@ function App() {
                         </IconButton>
                       </Stack>
                     </Box>
-                  );
-                })}
+                  ))}
               </Box>
             ) : null}
           </Box>
