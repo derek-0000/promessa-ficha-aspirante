@@ -124,37 +124,52 @@ function App() {
               Documentos que se Anexan
             </Typography>
             <form onSubmit={handleAddDocument}>
-              <TextField
-                required
-                label="Documentos que se Anexan"
-                fullWidth
-                helperText="De 'Enter' para agregar documento"
-              />
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                gap={2}
+              >
+                <TextField
+                  required
+                  label="Documentos que se Anexan"
+                  fullWidth
+                />
+                <IconButton
+                  type="submit"
+                  sx={{
+                    transition: "all .2s",
+                    ":hover": { color: "primary.light" },
+                  }}
+                >
+                  <Icon icon="uil:plus-circle" />
+                </IconButton>
+              </Stack>
             </form>
             {documents.length ? (
               <Box sx={{ p: 2, border: "1px solid #D1D1D1", borderRadius: 1 }}>
                 {documents.map((document, index) => (
-                    <Box width="100%" key={document + index}>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        gap={2}
+                  <Box width="100%" key={document + index}>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      gap={2}
+                    >
+                      <Typography>{document}</Typography>
+                      <IconButton
+                        id={document}
+                        onClick={handleFileDelete}
+                        sx={{
+                          transition: "all .2s",
+                          ":hover": { color: "error.light" },
+                        }}
                       >
-                        <Typography>{document}</Typography>
-                        <IconButton
-                          id={document}
-                          onClick={handleFileDelete}
-                          sx={{
-                            transition: "all .2s",
-                            ":hover": { color: "error.light" },
-                          }}
-                        >
-                          <Icon icon="uil:trash-alt" />
-                        </IconButton>
-                      </Stack>
-                    </Box>
-                  ))}
+                        <Icon icon="uil:trash-alt" />
+                      </IconButton>
+                    </Stack>
+                  </Box>
+                ))}
               </Box>
             ) : null}
           </Box>
