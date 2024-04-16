@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { ThemeProvider, createTheme } from "@mui/material";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import { createTheme, ThemeProvider } from "@mui/material";
+
 import "./main.css";
+import App from "./App";
 
 const theme = createTheme({
   typography: {
