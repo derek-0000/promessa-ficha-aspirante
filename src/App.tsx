@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Icon } from "@iconify/react";
 
 import {
@@ -8,6 +10,8 @@ import {
   Container,
   TextField,
   Typography,
+  IconButton,
+  Paper,
 } from "@mui/material";
 
 import PrintComponent from "./components/PrintComponent";
@@ -32,6 +36,21 @@ const personalInformation = [
 ];
 
 function App() {
+  const [documents, setDocuments] = useState<string[]>([]);
+  const handleAddDocument = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setDocuments([
+      ...documents,
+      (event.currentTarget.elements[0] as HTMLInputElement).value,
+    ]);
+    event.currentTarget.reset();
+  };
+
+  const handleFileDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const title = event.currentTarget.id;
+    setDocuments(documents.filter((doc) => doc !== title));
+  };
+
   return (
     <Box sx={{ py: 3 }}>
       <Container>
@@ -68,9 +87,24 @@ function App() {
               Datos Sieph
             </Typography>
             <Stack gap={2}>
-              <TextField multiline label="Fortalezas" />
-              <TextField multiline label="Areas de Oportunidad" />
-              <TextField multiline label="Avisos y Alertas" />
+              <TextField
+                multiline
+                label="Fortalezas"
+                color="success"
+                sx={{ borderColor: "success.main" }}
+              />
+              <TextField
+                multiline
+                label="Areas de Oportunidad"
+                color="warning"
+                sx={{ borderColor: "warning.main" }}
+              />
+              <TextField
+                multiline
+                label="Avisos y Alertas"
+                color="error"
+                sx={{ borderColor: "error.main" }}
+              />
             </Stack>
             <Typography variant="h6" mb={2} mt={2}>
               Experiencia Laboral
@@ -89,9 +123,44 @@ function App() {
               fullWidth
             />
             <Typography variant="h6" mb={2} mt={2}>
-              Datos Sieph
+              Documentos que se Anexan
             </Typography>
-            <TextField multiline label="Documentos que se Anexan" fullWidth />
+            <form onSubmit={handleAddDocument}>
+              <TextField
+                required
+                label="Documentos que se Anexan"
+                fullWidth
+                helperText="De 'Enter' para agregar documento"
+              />
+            </form>
+            {documents.length ? (
+              <Box sx={{ p: 2, border: "1px solid #D1D1D1", borderRadius: 1 }}>
+                {documents.map((document, index) => {
+                  return (
+                    <Box width="100%" key={document + index}>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        gap={2}
+                      >
+                        <Typography>{document}</Typography>
+                        <IconButton
+                          id={document}
+                          onClick={handleFileDelete}
+                          sx={{
+                            transition: "all .2s",
+                            ":hover": { color: "error.light" },
+                          }}
+                        >
+                          <Icon icon="uil:trash-alt" />
+                        </IconButton>
+                      </Stack>
+                    </Box>
+                  );
+                })}
+              </Box>
+            ) : null}
           </Box>
         </PrintComponent>
       </Container>
